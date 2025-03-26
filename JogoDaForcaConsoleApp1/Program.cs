@@ -2,7 +2,7 @@
 
 internal class Program
 {
-    //Versão 3: Verificação do input
+    //Versão 4: Exibir boneco da forca
     static void Main(string[] args)
     {
         while (true)
@@ -24,12 +24,32 @@ internal class Program
 
             do
             {
+
+                string cabecaDoBoneco = quantidadeErros >= 1 ? " o " : " ";
+                string tronco = quantidadeErros >= 2 ? "x" : " ";
+                string troncoBaixo = quantidadeErros >= 2 ? " x " : " ";
+                string bracoEsquerdo = quantidadeErros >= 3 ? "/" : " ";
+                string bracoDireito = quantidadeErros >= 4 ? @"\" : " ";
+                string pernas = quantidadeErros >= 5 ? "/ \\" : " ";
+
                 string dicaDaPalavra = string.Join(" ", letrasEncontradas);
 
                 Console.Clear();
                 Console.WriteLine("------------------------------------------------");
                 Console.WriteLine("Jogo da Forca");
                 Console.WriteLine("------------------------------------------------");
+
+                Console.WriteLine(" ___________        ");
+                Console.WriteLine(" |/        |        ");
+                Console.WriteLine(" |        {0}       ", cabecaDoBoneco);
+                Console.WriteLine(" |        {0}{1}{2} ", bracoEsquerdo, tronco, bracoDireito);
+                Console.WriteLine(" |        {0}       ", troncoBaixo);
+                Console.WriteLine(" |        {0}       ", pernas);
+                Console.WriteLine(" |                  ");
+                Console.WriteLine(" |                  ");
+                Console.WriteLine("_|____              ");
+                Console.WriteLine("----------------------------------------------");
+
                 Console.WriteLine("Palavra secreta: " + dicaDaPalavra);
                 Console.WriteLine("------------------------------------------------");
                 Console.WriteLine("Quantidade de Erros: " + quantidadeErros);
