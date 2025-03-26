@@ -1,14 +1,38 @@
-﻿
-
-internal class Program
+﻿internal class Program
 {
-    //Versão 4: Exibir boneco da forca
+    //Versão 5: Escolher uma palavra aleatória
     static void Main(string[] args)
     {
         while (true)
         {
+            string[] fruta = { "ABACATE", "ABACAXI", "ACEROLA", "ACAI", "ARACA", "ABACATE", "BACABA", "BACURI", "BANANA", "CAJA", "CAJU", "CARAMBOLA", "CUPUACU", "GRAVIOLA", "GOIABA", "JABUTICABA", "JENIPAPO", "MACA", "MANGABA", "MANGA", "MARACUJA", "MURICI", "PEQUI", "PITANGA", "PITAYA", "SAPOTI", "TANGERINA", "UMBU", "UVA", "UVAIA" };
 
-            string palavraSecreta = "UVA";
+            string[] animal = { "CACHORRO", "GATO", "COELHO", "PASSARO", "PEIXE", "LEAO", "TIGRE", "ELEFANTE", "ONCA", "URSO", "RAPOSA", "JAVALI", "RENDA", "MACACO", "ZEBRA", "GIRAFA", "AVESTRUZ", "CAIMÃO", "CAMELO", "ALIGATOR", "CAVALO", "ESQUILO", "PANDA", "GORILA", "QUEIXADA", "VELHO", "CAVALINHO", "BOI", "OVELHA", "PODEIRO", "ISPA" };
+
+            String[] paises = { "BRASIL", "ARGENTINA", "EUA", "CANADA", "MEXICO", "INGLATERRA", "FRANCA", "ESPANHA", "ITALIA", "ALEMANHA", "RÚSSIA", "AUSTRALIA", "CHINA", "JAPAO", "INDIA", "AFRICA DO SUL", "EGITO", "ARABIA SAUDITA", "PAQUISTAO", "BANGLADESH", "ARGELIA", "INDONESIA", "TAILANDIA", "COLOMBIA", "VENEZUELA", "PERU", "CHILE", "PORTUGAL", "SUECIA", "NORUEGA", "FINLANDIA" };
+
+            // Menu de categorias
+            Console.WriteLine("1. Frutas");
+            Console.WriteLine("2. Animais");
+            Console.WriteLine("3. Países");
+            Console.WriteLine("------------------------------------------------");
+            Console.Write("Escolha uma categoria: ");
+
+            int categoriaEscolhida = Convert.ToInt32(Console.ReadLine());
+
+            string[] categoriaSelecionada = categoriaEscolhida switch
+            {
+                1 => fruta,
+                2 => animal,
+                3 => paises,
+                _ => throw new ArgumentException("Categoria inválida.")
+            };
+
+            Random random = new Random();
+
+            int indiceEscolhido = random.Next(categoriaSelecionada.Length);
+
+            string palavraSecreta = categoriaSelecionada[indiceEscolhido];
 
             char[] letrasEncontradas = new char[palavraSecreta.Length];
 
@@ -94,7 +118,6 @@ internal class Program
                 }
 
             } while (jogadorAcertou == false && jogadorEnforcou == false);
-            Console.ReadLine();
         }
-}
     }
+}
