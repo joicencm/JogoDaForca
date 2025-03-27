@@ -33,15 +33,15 @@
             int indiceEscolhido = random.Next(categoriaSelecionada.Length);
 
             string palavraSecreta = categoriaSelecionada[indiceEscolhido];
-
             char[] letrasEncontradas = new char[palavraSecreta.Length];
+
 
             for (int caractere = 0; caractere < letrasEncontradas.Length; caractere++)
             {
                 //acessar a array no indice 0
                 letrasEncontradas[caractere] = '_';
             }
-
+            List<char> letrasChutadas = new List<char>();
             int quantidadeErros = 0;
             bool jogadorEnforcou = false;
             bool jogadorAcertou = false;
@@ -76,31 +76,50 @@
 
                 Console.WriteLine("Palavra secreta: " + dicaDaPalavra);
                 Console.WriteLine("------------------------------------------------");
+                Console.WriteLine("Letras já chutadas: " + string.Join(", ", letrasChutadas));
+                Console.WriteLine("------------------------------------------------");
                 Console.WriteLine("Quantidade de Erros: " + quantidadeErros);
                 Console.WriteLine("------------------------------------------------");
 
-                Console.Write("Digite uma letra: ");
-                char chute = Console.ReadLine()[0]; // otém apenas um caractere do que o usuário digita
+                Console.WriteLine("Digite uma letra ou a palavra inteira para tentar: ");
+                string chute = Console.ReadLine().ToUpper(); // Transformar em maiúscula
 
-                bool letraFoiEncontrada = false;
-
-                for (int contador = 0; contador < palavraSecreta.Length; contador++)
+                // Verifica se o chute é uma palavra inteira
+                if (chute.Length > 1)
                 {
-                    char letraAtual = palavraSecreta[contador];
-
-                    if (chute == letraAtual)
+                    if (chute == palavraSecreta)
                     {
-                        letrasEncontradas[contador] = letraAtual;
-                        letraFoiEncontrada = true;
+                        letrasEncontradas = palavraSecreta.ToCharArray();
+                        jogadorAcertou = true;
+                    }
+                    else
+                    {
+                        quantidadeErros++;
+                        continue;
                     }
                 }
+                else if (chute.Length == 1)
+                {
 
-                if (letraFoiEncontrada == false)
-                    quantidadeErros++;
+                    letrasChutadas.Add(chute[0]);
 
-                dicaDaPalavra = string.Join("", letrasEncontradas);
+                    bool letraFoiEncontrada = false;
 
-                jogadorAcertou = dicaDaPalavra == palavraSecreta;
+                    for (int contador = 0; contador < palavraSecreta.Length; contador++)
+                    {
+
+                        if (chute[0] == palavraSecreta[contador])
+                        {
+                            letrasEncontradas[contador] = chute[0];
+                            letraFoiEncontrada = true;
+                        }
+                    }
+
+                    if (letraFoiEncontrada == false)
+                        quantidadeErros++;
+                }
+
+                jogadorAcertou = string.Join("", letrasEncontradas) == palavraSecreta;
 
                 jogadorEnforcou = quantidadeErros > 5;
 
@@ -113,7 +132,7 @@
                 else if (jogadorEnforcou)
                 {
                     Console.WriteLine("------------------------------------------------");
-                    Console.WriteLine("Que azer, tente novamente! A palavra era: " + palavraSecreta);
+                    Console.WriteLine("Que azar, tente novamente! A palavra era: " + palavraSecreta);
                     Console.WriteLine("------------------------------------------------");
                 }
 
